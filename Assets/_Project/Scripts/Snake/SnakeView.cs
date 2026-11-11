@@ -84,10 +84,27 @@ namespace SnakeScroller
         }
 
         // Creates one disabled segment and parents it to this object.
+        // Scales it so the sprite fills one grid cell, removing gaps.
         private GameObject CreateSegment()
         {
             GameObject seg = Instantiate(_segmentPrefab, transform);
             seg.SetActive(false);
+            if (_snakeController != null && _snakeController.GridConfig != null)
+            {
+                float cellSize = _snakeController.GridConfig.CellSize;
+                var sr = seg.GetComponent<SpriteRenderer>();
+                if (sr != null && sr.sprite != null)
+                {
+                    Vector2 spriteSize = sr.sprite.bounds.size;
+                    float scaleX = spriteSize.x > 0f ? cellSize / spriteSize.x : cellSize;
+                    float scaleY = spriteSize.y > 0f ? cellSize / spriteSize.y : cellSize;
+                    seg.transform.localScale = new Vector3(scaleX, scaleY, 1f);
+                }
+                else
+                {
+                    seg.transform.localScale = new Vector3(cellSize, cellSize, 1f);
+                }
+            }
             return seg;
         }
     }
