@@ -27,6 +27,7 @@ namespace SnakeScroller
         public List<Vector2Int> Body => _body;
         public Vector2Int Direction => _direction;
         public bool IsAlive => _alive;
+        public GridConfig GridConfig => _gridConfig;
 
         private void Awake()
         {
