@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnakeScroller.GridConfig
   _width: 20
   _height: 20
-  _cellSize: 1
+  _cellSize: 0.5
   _tickSeconds: 0.15
