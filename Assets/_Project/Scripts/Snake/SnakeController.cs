@@ -91,11 +91,10 @@ namespace SnakeScroller
             _direction = _wantedDirection;
             Vector2Int newHead = _body[0] + _direction;
 
-            // Wall check.
-            if (_gridConfig != null && !GridUtils.IsInside(newHead, _gridConfig))
+            // Wrap around the grid edges instead of dying on walls.
+            if (_gridConfig != null)
             {
-                Die();
-                return;
+                newHead = GridUtils.WrapCell(newHead, _gridConfig);
             }
 
             // Self-hit check. The tail will move away this tick, so ignore it.

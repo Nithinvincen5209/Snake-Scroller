@@ -24,6 +24,15 @@ namespace SnakeScroller
             return insideX && insideY;
         }
 
+        // Wraps a cell around the grid edges, so exiting one side
+        // re-enters from the opposite side (toroidal grid).
+        public static Vector2Int WrapCell(Vector2Int cell, GridConfig config)
+        {
+            int x = ((cell.x % config.Width) + config.Width) % config.Width;
+            int y = ((cell.y % config.Height) + config.Height) % config.Height;
+            return new Vector2Int(x, y);
+        }
+
         // Finds the world position of the grid's bottom-left corner, so the grid is centered.
         public static Vector2 GetBottomLeftCorner(GridConfig config)
         {
