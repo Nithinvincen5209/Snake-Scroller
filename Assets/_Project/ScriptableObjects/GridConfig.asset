@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d296c736780014bb74eafaef2181a1, type: 3}
   m_Name: GridConfig
   m_EditorClassIdentifier: Assembly-CSharp::SnakeScroller.GridConfig
-  _width: 20
+  _width: 34
   _height: 20
   _cellSize: 0.5
   _tickSeconds: 0.15
