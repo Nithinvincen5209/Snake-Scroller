@@ -31,6 +31,18 @@ namespace SnakeScroller
 
         private void Awake()
         {
+            if (_gridConfig == null)
+            {
+                Debug.LogError("SnakeController: GridConfig is not assigned!", this);
+                enabled = false;
+                return;
+            }
+            if (_tickService == null)
+            {
+                Debug.LogError("SnakeController: TickService is not assigned!", this);
+                enabled = false;
+                return;
+            }
             ResetSnake();
         }
 

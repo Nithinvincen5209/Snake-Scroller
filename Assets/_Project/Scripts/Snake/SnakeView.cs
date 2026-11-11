@@ -38,6 +38,11 @@ namespace SnakeScroller
         private void Start()
         {
             // Show the snake before the first tick fires.
+            if (_snakeController == null || _snakeController.GridConfig == null)
+            {
+                Debug.LogError("SnakeView: SnakeController or GridConfig is not assigned!", this);
+                return;
+            }
             Refresh();
         }
 
