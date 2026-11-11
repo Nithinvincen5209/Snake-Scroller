@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ namespace SnakeScroller
         [SerializeField] private FoodSpawner _foodSpawner;
         [SerializeField] private ScoreService _scoreService;
         [SerializeField] private GameObject _gameOverCanvas;
+        [SerializeField] private TMP_Text _finalScoreText;
 
         public GameState CurrentState { get; private set; } = GameState.Playing;
 
@@ -46,6 +48,8 @@ namespace SnakeScroller
             CurrentState = GameState.GameOver;
             _tickService.StopTicking();
             if (_gameOverCanvas != null) _gameOverCanvas.SetActive(true);
+            if (_finalScoreText != null && _scoreService != null)
+                _finalScoreText.text = "Score: " + _scoreService.Score;
         }
 
         // Resets everything and starts a new run.
