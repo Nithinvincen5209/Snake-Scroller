@@ -1,30 +1,20 @@
 # Snake Scroller
 
-Classic Snake built in Unity 6 (6000.5.6f1, URP 2D) with extras.
+Classic Snake in Unity 6 (6000.5.6f1, URP 2D) with extras.
 
 ## How to play
 - **Arrow keys / WASD** — move the snake
 - **R or Space** — restart after Game Over
-- Eat food to grow and score. Don't hit your own body.
+- Eat food to grow and score. Don't hit your own body. Wrap-around edges (no wall death).
 
-## What I added beyond basic Snake
-- **Wrap-around movement** — exiting one edge re-enters from the opposite side.
-- **Speed scaling** — snake gets faster every 50 points.
-- **Data-driven food types** — food is a ScriptableObject. New types need only a new asset.
-- **Object-pooled snake segments** — reusable GameObjects, no per-tick Instantiate/Destroy.
-- **Event-driven architecture** — scripts talk via System.Action events, no FindObjectOfType.
+## What I added beyond basic Snake (and why)
+- **Wrap-around movement** — snake exits one edge and re-enters the opposite. Keeps gameplay fast and fun.
+- **Speed scaling** — snake speeds up every 50 points. Adds dynamic difficulty.
+- **Data-driven food types** — food is a ScriptableObject (apple, speed-up, double score, etc.). New types = new asset, zero code changes.
+- **Object-pooled segments** — reusable GameObjects, no per-tick Instantiate/Destroy.
+- **Event-driven architecture** — scripts communicate via System.Action events. No FindObjectOfType or singletons.
 
-## Project structure
-```
-Assets/_Project/
-  Scripts/Core/    GridConfig, GridUtils, TickService, GameManager, ScoreService, SpeedScaler
-  Scripts/Snake/   SnakeController, SnakeInput, SnakeView
-  Scripts/Food/    FoodData, FoodSpawner, SpeedBoost
-  Scripts/UI/      ScoreView
-  ScriptableObjects/  GridConfig, food type assets
-  Prefabs/  Scenes/  Art/  Audio/
-```
-
-## AI tools used
-- **OpenCode** — wrote code step by step following the AGENTS.md rules file.
-- I reviewed, tested, and understood every script before committing.
+## AI tools used and for what
+- **Claude** — project planning, step-by-step build plan, architecture decisions, AGENTS.md rules file.
+- **ChatGPT** — created game sprites and art assets (snake, food, background, wall tile).
+- **OpenCode** — wrote all C# scripts step by step, following AGENTS.md. Reviewed and tested each before committing.
