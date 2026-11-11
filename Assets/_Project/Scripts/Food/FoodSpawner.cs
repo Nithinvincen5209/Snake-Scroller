@@ -30,20 +30,27 @@ namespace SnakeScroller
         // Creates the one food object we reuse, so we never Instantiate per meal.
         private void Awake()
         {
+            if (_foodPrefab == null) return;
             _foodObject = Instantiate(_foodPrefab, transform);
             _foodRenderer = _foodObject.GetComponent<SpriteRenderer>();
+        }
+
+        // Cleans up the food object when this spawner is destroyed.
+        private void OnDestroy()
+        {
+            if (_foodObject != null) Destroy(_foodObject);
         }
 
         // Listens to the snake so we can check eating after every move.
         private void OnEnable()
         {
-            _snakeController.OnMoved += CheckEaten;
+            if (_snakeController != null) _snakeController.OnMoved += CheckEaten;
         }
 
         // Stops listening when disabled, so no events reach a dead object.
         private void OnDisable()
         {
-            _snakeController.OnMoved -= CheckEaten;
+            if (_snakeController != null) _snakeController.OnMoved -= CheckEaten;
         }
 
         // Places the first food when the game starts.
@@ -78,8 +85,11 @@ namespace SnakeScroller
         // Picks a food type at random. A higher SpawnWeight means more often.
         private FoodData PickRandomFood()
         {
+            if (_foods == null || _foods.Length == 0) return null;
+
             float total = 0f;
             foreach (FoodData food in _foods) total += food.SpawnWeight;
+            if (total <= 0f) return _foods[0];
 
             float roll = UnityEngine.Random.Range(0f, total);
             foreach (FoodData food in _foods)

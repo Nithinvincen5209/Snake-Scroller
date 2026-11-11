@@ -8,6 +8,7 @@ namespace SnakeScroller
     public class TickService : MonoBehaviour
     {
         [SerializeField] private GridConfig _gridConfig;
+        [SerializeField] private bool _startOnPlay = true;
 
         // Fired once every tick. Listeners move one step per event.
         public event Action OnTick;
@@ -27,6 +28,15 @@ namespace SnakeScroller
                 return;
             }
             _tickSeconds = _gridConfig.TickSeconds;
+        }
+
+        // Starts the clock on Play while there is no GameManager yet to call StartTicking().
+        private void Start()
+        {
+            if (_startOnPlay)
+            {
+                StartTicking();
+            }
         }
 
         // Counts frame time and fires OnTick each time a full tick passed.
@@ -55,11 +65,11 @@ namespace SnakeScroller
             _running = false;
         }
 
-        // Changes speed at runtime (speed-up food later). The floor stops
-        // a value of 0 from freezing the game.
+        // Changes speed at runtime (speed-up food later). Clamped so the
+        // game never freezes or runs impossibly fast.
         public void SetTickSeconds(float seconds)
         {
-            _tickSeconds = Mathf.Max(0.01f, seconds);
+            _tickSeconds = Mathf.Clamp(seconds, 0.01f, 1f);
         }
     }
 }

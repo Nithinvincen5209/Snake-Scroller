@@ -15,6 +15,7 @@ namespace SnakeScroller
 
         private readonly Queue<GameObject> _pool = new Queue<GameObject>();
         private readonly List<GameObject> _active = new List<GameObject>();
+        private readonly List<SpriteRenderer> _renderers = new List<SpriteRenderer>();
 
         private void Awake()
         {
@@ -61,6 +62,7 @@ namespace SnakeScroller
                 GameObject seg = _pool.Count > 0 ? _pool.Dequeue() : CreateSegment();
                 seg.SetActive(true);
                 _active.Add(seg);
+                _renderers.Add(seg.GetComponent<SpriteRenderer>());
             }
 
             // Return extra segments to the pool.
@@ -68,6 +70,7 @@ namespace SnakeScroller
             {
                 GameObject seg = _active[_active.Count - 1];
                 _active.RemoveAt(_active.Count - 1);
+                _renderers.RemoveAt(_renderers.Count - 1);
                 seg.SetActive(false);
                 _pool.Enqueue(seg);
             }
@@ -76,8 +79,7 @@ namespace SnakeScroller
             for (int i = 0; i < needed; i++)
             {
                 _active[i].transform.position = GridUtils.CellToWorld(body[i], _snakeController.GridConfig);
-                var renderer = _active[i].GetComponent<SpriteRenderer>();
-                if (renderer != null) renderer.color = (i == 0) ? _headColor : _bodyColor;
+                if (_renderers[i] != null) _renderers[i].color = (i == 0) ? _headColor : _bodyColor;
             }
         }
 
